@@ -2,29 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="F1 107%">
+    
     <title>F1 107% Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>F1 107% Calculator</h1>
-    <form id="calc-form">
-        <label for="qualified-time">Qualified Time (minutes:seconds):</label>
-        <input type="text" id="qualified-time" placeholder="e.g., 1:30.123" required>
-        <button type="submit">Calculate</button>
-    </form>
-    <h2 id="result"></h2>
 
-    <script>
-        document.getElementById('calc-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const qualifiedTime = document.getElementById('qualified-time').value;
-            const [minutes, seconds] = qualifiedTime.split(':');
-            const totalTimeInSeconds = parseFloat(minutes) * 60 + parseFloat(seconds);
-            const percentage107Time = totalTimeInSeconds * 1.07;
-            const resultMinutes = Math.floor(percentage107Time / 60);
-            const resultSeconds = (percentage107Time % 60).toFixed(3);
-            document.getElementById('result').innerText = `107% Time: ${resultMinutes}:${resultSeconds.padStart(6, '0')}`;
-        });
-    </script>
+<div class="container">
+    <h2>107% Calculator</h2>
+    
+    <label>Fastest Q1 Lap</label>
+    <div class="time-inputs">
+        <input type="number" id="min" value="1">
+        <input type="number" id="sec" value="30">
+        <input type="number" id="ms" value="000">
+    </div>
+
+    <div class="results">
+        <label>107% Cut-off</label>
+        <div id="targetTime">1:36.300</div>
+        <div id="offsetValue">Offset: +6.300s</div>
+    </div>
+
+    <button class="btn-save" onclick="saveToHistory()">Save Lap</button>
+
+    <div class="history-section">
+        <label>Recent Sessions</label>
+        <div id="historyList"></div>
+    </div>
+</div>
+
+<script>
+    const minIn = document.getElementById('min');
+    const secIn = document.getElementById('sec');
+    const msIn = document.getElementById('ms');
+
+    [minIn, secIn, msIn].forEach(el => el.addEventListener('input', calculate));
+
+    function calculate() {
+        const m = parseFloat(minIn.value) || 0;
+        const s = parseFloat(secIn.value) || 0;
+        const ms = parseFloat(msIn.value) || 0;
+
+        let totalSeconds = (m * 60) + s + (ms / 1000);
+        let targetSeconds = totalSeconds * 1.07;
+        let offset = targetSeconds - totalSeconds;
+
+        let outMin = Math.floor(targetSeconds / 60);
+        let outSec = (targetSeconds % 60).toFixed(3);
+        
+        const finalTime = `${outMin}:${outSec.padStart(6, '0')}`;
+        document.getElementById('targetTime').innerText = finalTime;
+        document.getElementById('offsetValue').innerText = `Offset: +${offset.toFixed(3)}s`;
+        
+        return { input: `${m}:${s.toString().padStart(2,'0')}.${ms}`, output: finalTime };
+    }
+
+    function saveToHistory() {
+        const data = calculate();
+        let history = JSON.parse(localStorage.getItem('f1_107_history') || '[]');
+        history.unshift(data);
+        if (history.length > 5) history.pop();
+        localStorage.setItem('f1_107_history', JSON.stringify(history));
+        renderHistory();
+    }
+
+    function renderHistory() {
+        const history = JSON.parse(localStorage.getItem('f1_107_history') || '[]');
+        const list = document.getElementById('historyList');
+        list.innerHTML = history.map(item => `
+            <div class="history-item">
+                <span><span class="hist-label">In:</span> ${item.input}</span>
+                <span><b>${item.output}</b></span>
+            </div>
+        `).join('');
+    }
+
+    calculate();
+    renderHistory();
+</script>
+
 </body>
 </html>
