@@ -109,3 +109,31 @@ input {
 }
 
 .hist-label { color: var(--text-gray); }
+
+/* Styling for the new description section */
+.info-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-gray);
+    text-align: left;
+}
+
+.info-section h3 {
+    color: var(--text-white);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+.info-section p {
+    margin-bottom: 12px;
+}
+
+.info-section strong {
+    color: var(--f1-red);
+    font-weight: 600;
+}
