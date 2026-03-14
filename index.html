@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 107% Calculator</title>
+</head>
+<body>
+    <h1>F1 107% Calculator</h1>
+    <form id="calc-form">
+        <label for="qualified-time">Qualified Time (minutes:seconds):</label>
+        <input type="text" id="qualified-time" placeholder="e.g., 1:30.123" required>
+        <button type="submit">Calculate</button>
+    </form>
+    <h2 id="result"></h2>
+
+    <script>
+        document.getElementById('calc-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const qualifiedTime = document.getElementById('qualified-time').value;
+            const [minutes, seconds] = qualifiedTime.split(':');
+            const totalTimeInSeconds = parseFloat(minutes) * 60 + parseFloat(seconds);
+            const percentage107Time = totalTimeInSeconds * 1.07;
+            const resultMinutes = Math.floor(percentage107Time / 60);
+            const resultSeconds = (percentage107Time % 60).toFixed(3);
+            document.getElementById('result').innerText = `107% Time: ${resultMinutes}:${resultSeconds.padStart(6, '0')}`;
+        });
+    </script>
+</body>
+</html>
