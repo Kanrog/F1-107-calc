@@ -1,0 +1,111 @@
+:root {
+    --f1-red: #e10600;
+    --dark-bg: #15151e;
+    --card-bg: #1f1f27;
+    --text-white: #ffffff;
+    --text-gray: #949498;
+    --border: #38383f;
+    color-scheme: dark; /* Helps mobile browsers understand the theme */
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-white);
+    margin: 0;
+    padding: env(safe-area-inset-top) 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border-top: 4px solid var(--f1-red);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+h2 { 
+    text-transform: uppercase; 
+    font-size: 1rem; 
+    margin-top: 0; 
+    border-bottom: 1px solid var(--border); 
+    padding-bottom: 10px; 
+}
+
+label { 
+    display: block; 
+    color: var(--text-gray); 
+    font-size: 0.75rem; 
+    margin-bottom: 8px; 
+    text-transform: uppercase; 
+}
+
+.time-inputs { 
+    display: flex; 
+    gap: 8px; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+input {
+    background: #2b2b35;
+    border: 1px solid var(--border);
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+    -webkit-appearance: none;
+}
+
+.btn-save {
+    width: 100%;
+    background: var(--f1-red);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.btn-save:active {
+    background: #b80500;
+}
+
+.results {
+    background: #15151e;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#targetTime { font-size: 2.2rem; font-weight: 800; color: var(--f1-red); }
+#offsetValue { color: var(--text-gray); font-size: 0.9rem; margin-top: 5px; }
+
+.history-section { border-top: 1px solid var(--border); padding-top: 15px; }
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    background: #2b2b35;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+}
+
+.hist-label { color: var(--text-gray); }
